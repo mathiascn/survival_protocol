@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://brp2bhu3lbgyx"]
+
+[ext_resource type="Script" path="res://hello.gd" id="1_fhpeh"]
+
+[node name="Node2D" type="Node2D"]
+script = ExtResource("1_fhpeh")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = 214.0
+offset_top = 96.0
+offset_right = 301.0
+offset_bottom = 119.0
+text = "hello world"
+
+[node name="Connect" type="Button" parent="."]
+offset_left = 111.0
+offset_top = 156.0
+offset_right = 183.0
+offset_bottom = 187.0
+text = "Connect"
+
+[node name="Disconnect" type="Button" parent="."]
+offset_left = 110.0
+offset_top = 211.0
+offset_right = 204.0
+offset_bottom = 242.0
+text = "Disconnect"
+
+[node name="Write" type="Button" parent="."]
+offset_left = 268.0
+offset_top = 173.0
+offset_right = 319.0
+offset_bottom = 204.0
+text = "Write
+"
