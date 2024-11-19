@@ -4,6 +4,66 @@ var port = 8080
 var udp_peer: PacketPeerUDP
 var is_connected = false
 
+enum MessageType {
+	Handshake = 0,
+	Ping = 1,
+	Pong = 2,
+	Move = 3,
+	Shoot = 4,
+	Chat = 5
+}
+
+func enum_key_for_value(enum_type: Dictionary, value: int) -> String:
+	for key in enum_type.keys():
+		if enum_type[key] == value:
+			return key
+	return "Unknown"
+
+func encode_packet(message_type: MessageType, payload: String) -> PackedByteArray:
+	if message_type < 0 or message_type > 255:
+		print("Error: Message type must be a valid byte")
+		return PackedByteArray()
+	
+	var payload_bytes = payload.to_utf8_buffer()
+	var payload_length = len(payload_bytes)
+	
+	# Create header: message type + size (big-endian uint32)
+	var header = PackedByteArray()
+	header.append(message_type)
+	header.append_array([
+		(payload_length >> 24) & 0xFF,
+		(payload_length >> 16) & 0xFF,
+		(payload_length >> 8) & 0xFF,
+		payload_length & 0xFF
+	])
+	
+	# Combine header and payload
+	var packet = header
+	packet.append_array(payload_bytes)
+	return packet
+
+
+func decode_packet(packet: PackedByteArray) -> Array:
+	if len(packet) < 5:
+		print("Invalid packet size")
+		return []
+	
+	# Extracts the message header
+	var message_type = packet[0]
+	
+	# Extracts the size bytes
+	var size_bytes = packet.slice(1, 5)
+	# Reverse the size bytes as decode_u32 uses little-endian
+	# https://en.wikipedia.org/wiki/Endianness
+	size_bytes.reverse()
+	var size = PackedByteArray(size_bytes).decode_u32(0)
+	var payload = packet.slice(5)
+	payload = payload.get_string_from_utf8()
+	if len(payload) != size:
+		print("Corrupt packet: Payload size does not match header size.")
+		return []
+	return [message_type, payload]
+
 func _on_connect_button_pressed():
 	if is_connected:
 		print("UDP connection is already set up.")
@@ -41,9 +101,10 @@ func _on_write_button_pressed():
 		print("You must connect before sending messages.")
 		return
 	
-	var message = "hello server!"
+	var message = "ping"
+	var packet = encode_packet(MessageType.Ping, message)
 	
-	var send_error = udp_peer.put_packet(message.to_utf8_buffer())
+	var send_error = udp_peer.put_packet(packet)
 	if send_error != OK:
 		print("Error sending data:", send_error)
 		return
@@ -58,8 +119,17 @@ func _process(delta):
 	if status == 0:
 		return
 	
-	var packet = udp_peer.get_packet()
-	print("Received from server: %s" % packet.get_string_from_utf8())
+	var udp_packet = udp_peer.get_packet()
+	var decoded_data = decode_packet(udp_packet)
+	if not decoded_data:
+		return
+
+	var message_type = decoded_data[0]
+	var payload = decoded_data[1]
+	print("Received '%s' from server: '%s'" % [
+		enum_key_for_value(MessageType, message_type),
+		payload
+	])
 
 func _ready():
 	var connect_button = $Connect
