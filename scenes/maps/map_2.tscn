@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://dagpfvdlhbee"]
+
+[node name="Map2" type="Node2D"]
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 523.0
+offset_top = 177.0
+offset_right = 563.0
+offset_bottom = 217.0
+
+[node name="Label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -52.0
+offset_top = -25.0
+offset_right = 101.0
+offset_bottom = -2.0
+text = "vertigo"

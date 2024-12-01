@@ -1,0 +1,59 @@
+[gd_scene load_steps=4 format=3 uid="uid://brp2bhu3lbgyx"]
+
+[ext_resource type="Script" path="res://scenes/main_menu/main_menu.gd" id="1_dl886"]
+[ext_resource type="Script" path="res://scenes/main_menu/connect_button.gd" id="2_4cugi"]
+[ext_resource type="FontFile" uid="uid://bakmh77bn0m4h" path="res://assets/fonts/PressStart2P-Regular.ttf" id="2_quode"]
+
+[node name="MainMenu" type="Node2D"]
+script = ExtResource("1_dl886")
+
+[node name="Standard" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_4cugi")
+
+[node name="HostInput" type="TextEdit" parent="Standard"]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 345.0
+offset_right = 840.0
+offset_bottom = 380.0
+theme_override_fonts/font = ExtResource("2_quode")
+theme_override_font_sizes/font_size = 17
+placeholder_text = "ip:port"
+
+[node name="ConnectButton" type="Button" parent="Standard"]
+layout_mode = 0
+offset_left = 370.0
+offset_top = 388.0
+offset_right = 840.0
+offset_bottom = 423.0
+theme_override_fonts/font = ExtResource("2_quode")
+text = "Connect"
+
+[node name="GameNameLabel" type="Label" parent="Standard"]
+layout_mode = 0
+offset_left = 2.0
+offset_top = 106.0
+offset_right = 1153.0
+offset_bottom = 185.0
+theme_override_fonts/font = ExtResource("2_quode")
+theme_override_font_sizes/font_size = 58
+text = "Game Name"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Status" type="Label" parent="Standard"]
+visible = false
+layout_mode = 0
+offset_left = 371.0
+offset_top = 293.0
+offset_right = 829.0
+offset_bottom = 320.0
+theme_override_fonts/font = ExtResource("2_quode")
+theme_override_font_sizes/font_size = 10
+text = "Failed to establish a connection to the server"
+horizontal_alignment = 1
+vertical_alignment = 1

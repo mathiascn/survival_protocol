@@ -10,7 +10,19 @@ config_version=5
 
 [application]
 
-config/name="multiplayer_game"
-run/main_scene="res://world.tscn"
+config/name="survival protocol"
+run/main_scene="res://scenes/main_menu/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+Events="*res://scripts/Events.gd"
+ConnectionManager="*res://scripts/server/ConnectionManager.gd"
+Utils="*res://scripts/Utils.gd"
+Config="*res://scripts/Config.gd"
+Main="*res://scripts/Main.gd"
+
+[physics]
+
+common/physics_ticks_per_second=64
