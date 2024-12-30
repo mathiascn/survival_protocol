@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://b2dpacemwkeov"]
+
+[ext_resource type="Script" path="res://components/shoot_component.gd" id="1_emw1n"]
+
+[node name="ShootComponent" type="RayCast2D"]
+script = ExtResource("1_emw1n")

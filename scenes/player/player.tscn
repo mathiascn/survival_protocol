@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://blkiv60ydl0p8"]
 
-[ext_resource type="Script" path="res://scenes/player/movement_component.gd" id="1_7272f"]
+[ext_resource type="Script" path="res://scenes/player/player.gd" id="1_7272f"]
 [ext_resource type="Texture2D" uid="uid://c5ckuea4xa1s3" path="res://icon.svg" id="2_hmsld"]
-[ext_resource type="Script" path="res://scenes/player/ray_cast_2d.gd" id="3_6xf65"]
+[ext_resource type="PackedScene" uid="uid://b2dpacemwkeov" path="res://components/shoot_component.tscn" id="3_urmav"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_q58a8"]
 radius = 64.0312
@@ -11,6 +11,7 @@ radius = 64.0312
 script = ExtResource("1_7272f")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+rotation = -1.5708
 texture = ExtResource("2_hmsld")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -19,5 +20,4 @@ shape = SubResource("CircleShape2D_q58a8")
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(0.5, 0.5)
 
-[node name="RayCast2D" type="RayCast2D" parent="."]
-script = ExtResource("3_6xf65")
+[node name="ShootComponent" parent="." instance=ExtResource("3_urmav")]
